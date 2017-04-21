@@ -4,35 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-    <h2>Non-Profits List</h2>
-    <div>
-        {% for organization in organization_list %}
-            <h3>{{ organization.business_name | title }}</h3>
-            <div>Address: {{ organization.address | title }}</div>
-            <div>Zip: {{ organization.zip_code }}</div>
-            <div>City: {{ organization.city | title }}</div>
-            <div>State: {{ organization.state | title }}</div>
-            <div>Date Registered: {{ organization.registry_date }}</div>
-        {% endfor %}
-    </div>
+<div class="container">
+    <div class="row">
+        <h2>Non-Profits List</h2>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                Filter
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="#">City</a></li>
+                <li><a href="#">State</a></li>
+                <li><a href="#">Zip Code</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
 
 
-    <div>
+        <div>
+            {% for organization in organization_list %}
+                <h3>{{ organization.business_name | title }}</h3>
+                <div>Address: {{ organization.address | title }}</div>
+                <div>Zip: {{ organization.zip_code }}</div>
+                <div>City: {{ organization.city | title }}</div>
+                <div>State: {{ organization.state | title }}</div>
+                <div>Date Registered: {{ organization.registry_date }}</div>
+            {% endfor %}
+        </div>
 
-    <div class="pagination">
-        {% if organization_list.has_previous %}
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
-        {% endif %}
+        <div class="pagination">
+            {% if organization_list.has_previous %}
+                <a href="?page={{ contacts.previous_page_number }}">previous</a>
+            {% endif %}
 
-        <span class="current">
+            <span class="current">
             Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
         </span>
 
-        {% if organization_list.has_next %}
-            <a href="?page={{ organization_list.next_page_number }}">next</a>
-        {% endif %}
+            {% if organization_list.has_next %}
+                <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
+            {% endif %}
+        </div>
     </div>
+</div>
+<footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</footer>
 </body>
 </html>
