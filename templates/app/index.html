@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Non-Profits List</h2>
+    <div>
+        {% for organization in organization_list %}
+            <h3>{{ organization.business_name }}</h3>
+            <div>Address: {{ organization.address }}</div>
+            <div>Zip: {{ organization.zip_code }}</div>
+            <div>City: {{ organization.city }}</div>
+            <div>State: {{ organization.state }}</div>
+            <div>Date Registered: {{ organization.registry_date }}</div>
+        {% endfor %}
+    </div>
+</body>
+</html>
