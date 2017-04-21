@@ -9,13 +9,30 @@
     <h2>Non-Profits List</h2>
     <div>
         {% for organization in organization_list %}
-            <h3>{{ organization.business_name }}</h3>
-            <div>Address: {{ organization.address }}</div>
+            <h3>{{ organization.business_name | title }}</h3>
+            <div>Address: {{ organization.address | title }}</div>
             <div>Zip: {{ organization.zip_code }}</div>
-            <div>City: {{ organization.city }}</div>
-            <div>State: {{ organization.state }}</div>
+            <div>City: {{ organization.city | title }}</div>
+            <div>State: {{ organization.state | title }}</div>
             <div>Date Registered: {{ organization.registry_date }}</div>
         {% endfor %}
+    </div>
+
+
+    <div>
+
+    <div class="pagination">
+        {% if organization_list.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
+        </span>
+
+        {% if organization_list.has_next %}
+            <a href="?page={{ organization_list.next_page_number }}">next</a>
+        {% endif %}
     </div>
 </body>
 </html>

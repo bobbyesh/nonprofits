@@ -3,15 +3,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from app.models import Organization
 
 
-
 class IndexView(TemplateView):
     template_name = 'app/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        organization_list = Organization.objects.all().order_by('id')
+        organization_list = self.get_queryset()
         paginator = Paginator(organization_list, 25)
-        page = kwargs.get('page')
+        page = self.request.GET.get('page')
         try:
             organization_list = paginator.page(page)
         except PageNotAnInteger:
@@ -22,3 +21,20 @@ class IndexView(TemplateView):
             organization_list = paginator.page(paginator.num_pages)
         context['organization_list'] = organization_list
         return context
+
+    def get_queryset(self):
+        queryset = Organization.objects.all().order_by('id')
+        queryset = self.filter_by_param('city', queryset)
+        queryset = self.filter_by_param('state', queryset)
+        queryset = self.filter_by_param('zip_code', queryset)
+
+        return queryset
+
+    def filter_by_param(self, param, queryset):
+        if param in self.request.GET:
+            field = self.request.GET.get(param)
+            field = field.upper()
+            kwarg = {param: field}
+            return queryset.filter(**kwarg)
+        else:
+            return queryset
