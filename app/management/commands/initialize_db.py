@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from app.models import Organization
-from app.services import get_api_data
+from app.services import get_api_data, get_coordinates
 
 
 class Command(BaseCommand):
@@ -14,11 +14,9 @@ class Command(BaseCommand):
             Organization.objects.all().delete()
 
         else:
-            data_list = get_api_data()
-            for data in data_list:
-                print('name:', data['business_name'])
-                try:
-                    Organization.objects.create(**data)
-                except:
-                    print(data)
-                    raise
+            for data in get_api_data():
+                organization = Organization(**data)
+                latitude, longitude = get_coordinates(organization.full_address())
+                organization.latitude = latitude
+                organization.longitude = longitude
+                organization.save()

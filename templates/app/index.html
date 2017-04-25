@@ -6,52 +6,106 @@
     <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <script>
+    </script>
+
 </head>
 <body>
 <div class="container">
+
+
+    <div id="map"></div>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        var map;
+        var geocoder;
+
+        function initMap() {
+            var latlng = {lat: 45, lng: -122}; // Portland coordinates
+            geocoder = new google.maps.Geocoder();
+
+            var mapOptions = {
+                zoom: 6,
+                center: latlng
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            create_markers();
+        }
+
+        function create_markers() {
+
+
+            const organizationData = [
+                {% for organization in organization_list %}
+                    {
+                        info: "<h4>{{ organization.business_name | title }}</h4><div>{{ organization.full_address }}</div>",
+                        address: "{{ organization.full_address }}",
+                        latLng: {
+                            lat: {{ organization.latitude }},
+                            lng: {{ organization.longitude }}
+                        }
+                    },
+                {% endfor %}
+            ];
+
+            for (var i = 0; i < organizationData.length - 1; i++) {
+                const info = organizationData[i].info;
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: organizationData[i].latLng,
+                });
+                const infowindow = new google.maps.InfoWindow({
+                    content: info
+                });
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                })
+            }
+        }
+    </script>
+
     <div class="row">
         <h2>Non-Profits List</h2>
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="true">
-                Filter
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#">City</a></li>
-                <li><a href="#">State</a></li>
-                <li><a href="#">Zip Code</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
-        </div>
+        <form action="." type="post">
+            {{ search_form.as_p }}
+            <input type="submit">
+        </form>
+    </div>
 
+    <div>
+        {% for organization in organization_list %}
+            <h3>{{ organization.business_name | title }}</h3>
+            <div>Address: {{ organization.address | title }}</div>
+            <div>Zip: {{ organization.zip_code }}</div>
+            <div>City: {{ organization.city | title }}</div>
+            <div>State: {{ organization.state | title }}</div>
+            <div>Date Registered: {{ organization.registry_date }}</div>
+        {% endfor %}
+    </div>
 
-        <div>
-            {% for organization in organization_list %}
-                <h3>{{ organization.business_name | title }}</h3>
-                <div>Address: {{ organization.address | title }}</div>
-                <div>Zip: {{ organization.zip_code }}</div>
-                <div>City: {{ organization.city | title }}</div>
-                <div>State: {{ organization.state | title }}</div>
-                <div>Date Registered: {{ organization.registry_date }}</div>
-            {% endfor %}
-        </div>
+    <div class="pagination">
+        {% if organization_list.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
 
-        <div class="pagination">
-            {% if organization_list.has_previous %}
-                <a href="?page={{ contacts.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
+        <span class="current">
             Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
         </span>
 
-            {% if organization_list.has_next %}
-                <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
-            {% endif %}
-        </div>
+        {% if organization_list.has_next %}
+            <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
+        {% endif %}
     </div>
+</div>
 </div>
 <footer>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -59,6 +113,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
+    </script>
 </footer>
 </body>
 </html>
