@@ -1,92 +1,58 @@
+{% extends 'app/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'app/index.css' %}">
-
-</head>
-<body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid" id="navbar-container">
-        <div class="navbar-header">
-            <a href="" class="navbar-brand">Non-Profits of Oregon</a>
-        </div>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="">Home</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
-    </div>
-</nav>
-<div class="container" id="map-container">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12" id="map-inner">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-
-</div>
-<div id="main-container" class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8" id="main-content">
-            <form action="." type="post">
-                <div class="form-group">
-                    <form action=".">
-                        {{ search_form }}
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                    </form>
+{% block content %}
+    <div class="container" id="map-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" id="map-inner">
+                    <div id="map"></div>
                 </div>
-            </form>
-            <h2>Non-Profits List</h2>
-            <div>
-                {% for organization in organization_list %}
-                    <h3>{{ organization.business_name | title }}</h3>
-                    <div>Address: {{ organization.address | title }}</div>
-                    <div>Zip: {{ organization.zip_code }}</div>
-                    <div>City: {{ organization.city | title }}</div>
-                    <div>State: {{ organization.state | title }}</div>
-                    <div>Date Registered: {{ organization.registry_date }}</div>
-                {% endfor %}
             </div>
+        </div>
 
-            <div class="pagination">
-                {% if organization_list.has_previous %}
-                    <a href="?page={{ contacts.previous_page_number }}">previous</a>
-                {% endif %}
+    </div>
+    <div id="main-container" class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" id="main-content">
+                <form action="." type="post">
+                    <div class="form-group">
+                        <form action=".">
+                            {{ search_form }}
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </form>
+                <h2>Non-Profits List</h2>
+                <div>
+                    {% for organization in organization_list %}
+                        <h3>{{ organization.business_name | title }}</h3>
+                        <div>Address: {{ organization.address | title }}</div>
+                        <div>Zip: {{ organization.zip_code }}</div>
+                        <div>City: {{ organization.city | title }}</div>
+                        <div>State: {{ organization.state | title }}</div>
+                        <div>Date Registered: {{ organization.registry_date }}</div>
+                    {% endfor %}
+                </div>
 
-                <span class="current">
+                <div class="pagination">
+                    {% if organization_list.has_previous %}
+                        <a href="?page={{ contacts.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
             Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
         </span>
 
-                {% if organization_list.has_next %}
-                    <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
-                {% endif %}
+                    {% if organization_list.has_next %}
+                        <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-md-2"></div>
-</div>
-</div>
-</div>
-<footer>
-    {% include 'app/organization_data.html' %}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
-    </script>
-    <script src="{% static 'app/google_maps.js' %}"></script>
-</footer>
-</body>
-</html>
+    <div class="col-md-2"></div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
