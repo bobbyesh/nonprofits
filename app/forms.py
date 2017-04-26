@@ -63,5 +63,12 @@ STATES = [
 
 
 class SearchForm(forms.Form):
-    city = forms.CharField(initial='Search by city...')
-    state = forms.ChoiceField(choices=STATES, label='State of Origin')
+    city = forms.CharField(
+        initial='Search by city...',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+    state = forms.ChoiceField(
+        choices=STATES,
+        label='State of Origin',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )

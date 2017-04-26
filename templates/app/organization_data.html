@@ -1,0 +1,14 @@
+<script>
+    const organizationData = [
+        {% for organization in organization_list %}
+            {
+                info: "<h4>{{ organization.business_name | title }}</h4><div>{{ organization.full_address }}</div>",
+                address: "{{ organization.full_address }}",
+                latLng: {
+                    lat: {{ organization.latitude }},
+                    lng: {{ organization.longitude }}
+                }
+            },
+        {% endfor %}
+    ];
+</script>

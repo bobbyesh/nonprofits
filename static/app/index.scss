@@ -1,0 +1,83 @@
+#map {
+  height: 450px;
+  width: 100%;
+}
+
+nav {
+  background-color: white;
+}
+
+#navbar-container {
+  background-color: white;
+
+}
+
+.navbar-brand,
+.navbar-nav li a {
+  height: 80px;
+  line-height: 80px;
+  padding-top: 10px;
+  background-color: white;
+
+}
+
+.navbar-brand {
+  padding-left: 70px;
+  font-size: 1.7em;
+  background-color: white;
+
+}
+
+nav li {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.navbar-right {
+  padding-right: 20px;
+}
+
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover
+{
+    background-color: white;
+}
+
+.navbar {
+
+  border: none;
+
+}
+
+body {
+  backgroun-color: grey;
+}
+
+#main-container {
+  margin-top: 50px;
+
+}
+
+#main-content {
+  background-color: white;
+  padding: 20px;
+  box-shadow: #6c6c6c;
+}
+
+#map-container {
+  width: 100%;
+  background-color: #464E54;
+}
+
+#map-inner {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+#main-content > form > div > button {
+  background-color: #464E54;
+  border-color: black;
+  margin-top: 10px;
+}

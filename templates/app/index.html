@@ -6,108 +6,78 @@
     <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-    <script>
-    </script>
+    <link rel="stylesheet" href="{% static 'app/index.css' %}">
 
 </head>
 <body>
-<div class="container">
+<nav class="navbar navbar-default">
+    <div class="container-fluid" id="navbar-container">
+        <div class="navbar-header">
+            <a href="" class="navbar-brand">Non-Profits of Oregon</a>
+        </div>
 
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="">Home</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container" id="map-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" id="map-inner">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
 
-    <div id="map"></div>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
-
-    <script>
-        var map;
-        var geocoder;
-
-        function initMap() {
-            var latlng = {lat: 45, lng: -122}; // Portland coordinates
-            geocoder = new google.maps.Geocoder();
-
-            var mapOptions = {
-                zoom: 6,
-                center: latlng
-            };
-
-            map = new google.maps.Map(document.getElementById('map'), mapOptions);
-            create_markers();
-        }
-
-        function create_markers() {
-
-
-            const organizationData = [
-                {% for organization in organization_list %}
-                    {
-                        info: "<h4>{{ organization.business_name | title }}</h4><div>{{ organization.full_address }}</div>",
-                        address: "{{ organization.full_address }}",
-                        latLng: {
-                            lat: {{ organization.latitude }},
-                            lng: {{ organization.longitude }}
-                        }
-                    },
-                {% endfor %}
-            ];
-
-            for (var i = 0; i < organizationData.length - 1; i++) {
-                const info = organizationData[i].info;
-                const marker = new google.maps.Marker({
-                    map: map,
-                    position: organizationData[i].latLng,
-                });
-                const infowindow = new google.maps.InfoWindow({
-                    content: info
-                });
-                marker.addListener('click', function () {
-                    infowindow.open(map, marker);
-                })
-            }
-        }
-    </script>
-
+</div>
+<div id="main-container" class="container">
     <div class="row">
-        <h2>Non-Profits List</h2>
-        <form action="." type="post">
-            {{ search_form.as_p }}
-            <input type="submit">
-        </form>
-    </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-8" id="main-content">
+            <form action="." type="post">
+                <div class="form-group">
+                    <form action=".">
+                        {{ search_form }}
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+            </form>
+            <h2>Non-Profits List</h2>
+            <div>
+                {% for organization in organization_list %}
+                    <h3>{{ organization.business_name | title }}</h3>
+                    <div>Address: {{ organization.address | title }}</div>
+                    <div>Zip: {{ organization.zip_code }}</div>
+                    <div>City: {{ organization.city | title }}</div>
+                    <div>State: {{ organization.state | title }}</div>
+                    <div>Date Registered: {{ organization.registry_date }}</div>
+                {% endfor %}
+            </div>
 
-    <div>
-        {% for organization in organization_list %}
-            <h3>{{ organization.business_name | title }}</h3>
-            <div>Address: {{ organization.address | title }}</div>
-            <div>Zip: {{ organization.zip_code }}</div>
-            <div>City: {{ organization.city | title }}</div>
-            <div>State: {{ organization.state | title }}</div>
-            <div>Date Registered: {{ organization.registry_date }}</div>
-        {% endfor %}
-    </div>
+            <div class="pagination">
+                {% if organization_list.has_previous %}
+                    <a href="?page={{ contacts.previous_page_number }}">previous</a>
+                {% endif %}
 
-    <div class="pagination">
-        {% if organization_list.has_previous %}
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
+                <span class="current">
             Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
         </span>
 
-        {% if organization_list.has_next %}
-            <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
-        {% endif %}
+                {% if organization_list.has_next %}
+                    <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
+</div>
+<div class="col-md-2"></div>
+</div>
 </div>
 </div>
 <footer>
+    {% include 'app/organization_data.html' %}
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -116,6 +86,7 @@
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
     </script>
+    <script src="{% static 'app/google_maps.js' %}"></script>
 </footer>
 </body>
 </html>
