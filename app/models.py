@@ -1,5 +1,5 @@
 from django.db import models
-
+from app import utils
 
 class Organization(models.Model):
     business_name = models.CharField(max_length=256, blank=True, unique=True)
@@ -20,3 +20,6 @@ class Organization(models.Model):
 
     def full_address(self):
         return '{}, {}, {}, {}'.format(self.address, self.city, self.state, self.zip_code)
+
+    def full_state_name(self):
+        return utils.STATES_FULL_NAME.get(str(self.state).upper())

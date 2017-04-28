@@ -9,12 +9,12 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div id="main-container" class="container">
         <div class="row">
-            <div class="col-md-2"></div>
+            <div class="col-md-2 side-panel"></div>
             <div class="col-md-8" id="main-content">
+
                 <form action="." type="post">
                     <div class="form-group">
                         <form action=".">
@@ -23,16 +23,23 @@
                         </form>
                     </div>
                 </form>
-                <h2>Non-Profits List</h2>
-                <div>
-                    {% for organization in organization_list %}
-                        <h3>{{ organization.business_name | title }}</h3>
-                        <div>Address: {{ organization.address | title }}</div>
-                        <div>Zip: {{ organization.zip_code }}</div>
-                        <div>City: {{ organization.city | title }}</div>
-                        <div>State: {{ organization.state | title }}</div>
-                        <div>Date Registered: {{ organization.registry_date }}</div>
-                    {% endfor %}
+
+                <h2 class="heading">Non-Profits Located in Oregon</h2>
+                <div class="row">
+                    <div class="col">
+                        {% for organization in organization_list %}
+                            <div class="organization-block">
+                            <h3>{{ organization.business_name | title }}</h3>
+                            <div><strong>Address</strong>: {{ organization.address | title }}</div>
+                            <div><strong>Zip</strong>: {{ organization.zip_code }}</div>
+                            <div><strong>City</strong>: {{ organization.city | title }}</div>
+                            <div><strong>State</strong>: {{ organization.full_state_name | title }}
+                            </div>
+                            <div><strong>Date Registered</strong>: {{ organization.registry_date }}
+                            </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <div class="pagination">
@@ -51,7 +58,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-2 side-panel"></div>
     </div>
     </div>
     </div>

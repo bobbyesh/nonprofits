@@ -5,8 +5,18 @@
                 info: "<h4>{{ organization.business_name | title }}</h4><div>{{ organization.full_address }}</div>",
                 address: "{{ organization.full_address }}",
                 latLng: {
-                    lat: {{ organization.latitude }},
-                    lng: {{ organization.longitude }}
+                    {% if organization.latitude %}
+                        lat: {{ organization.latitude }},
+                    {% else %}
+                        lat: null,
+                    {% endif %}
+
+                    {% if organization.longitude %}
+                        lng: {{ organization.longitude }}
+                    {% else %}
+                        lng: null
+                    {% endif %}
+
                 }
             },
         {% endfor %}

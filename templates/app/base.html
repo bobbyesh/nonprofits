@@ -9,33 +9,45 @@
     <link rel="stylesheet" href="{% static 'app/index.css' %}">
 </head>
 <body>
+<div class="body-wrap">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid" id="navbar-container">
+            <div class="navbar-header">
+                <a href="{% url 'index' %}" class="navbar-brand">Non-Profits of Oregon</a>
+            </div>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid" id="navbar-container">
-        <div class="navbar-header">
-            <a href="" class="navbar-brand">Non-Profits of Oregon</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="">Home</a></li>
-            <li><a href="#">About</a></li>
-        </ul>
+    {% block content %}
+    {% endblock %}
+    <div id="footer-break"></div>
+    <br>
+    <div class="container footer-container">
+        <div class="row">
+            <footer>
+                <p>Created by: Bobby Eshleman</p>
+                <p>Contact information: <a href="mailto:bobbyeshleman@gmail.com">
+                    bobbyeshleman@gmail.com</a>.</p>
+
+                {% include 'app/organization_data.html' %}
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+                        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                        crossorigin="anonymous"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                        crossorigin="anonymous"></script>
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
+                </script>
+                <script src="{% static 'app/google_maps.js' %}"></script>
+            </footer>
+        </div>
     </div>
-</nav>
-
-{% block content %}
-{% endblock %}
-<footer>
-    {% include 'app/organization_data.html' %}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&callback=initMap">
-    </script>
-    <script src="{% static 'app/google_maps.js' %}"></script>
-</footer>
+</div>
 </body>
 </html>

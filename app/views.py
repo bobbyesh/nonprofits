@@ -58,3 +58,7 @@ class IndexView(TemplateView):
             for val in vals:
                 ret += template.format(key, val)
         return ret
+
+
+class AboutView(TemplateView):
+    template_name = 'app/about.html'

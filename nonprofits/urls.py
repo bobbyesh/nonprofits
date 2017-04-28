@@ -19,5 +19,6 @@ from app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$', views.IndexView.as_view(), name='index')
+    url(r'^index/$', views.IndexView.as_view(), name='index'),
+    url(r'^about/$', views.AboutView.as_view(), name='about')
 ]
