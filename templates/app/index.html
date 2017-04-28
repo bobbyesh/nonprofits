@@ -29,20 +29,21 @@
                     <div class="col">
                         {% for organization in organization_list %}
                             <div class="organization-block">
-                            <h3>{{ organization.business_name | title }}</h3>
-                            <div><strong>Address</strong>: {{ organization.address | title }}</div>
-                            <div><strong>Zip</strong>: {{ organization.zip_code }}</div>
-                            <div><strong>City</strong>: {{ organization.city | title }}</div>
-                            <div><strong>State</strong>: {{ organization.full_state_name | title }}
+                                <h3>{{ organization.business_name | title }}</h3>
+                                <div><strong>Address</strong>: {{ organization.address | title }}</div>
+                                <div><strong>Zip</strong>: {{ organization.zip_code }}</div>
+                                <div><strong>City</strong>: {{ organization.city | title }}</div>
+                                <div><strong>State</strong>: {{ organization.full_state_name | title }}
+                                </div>
+                                <div><strong>Date Registered</strong>: {{ organization.registry_date }}
+                                </div>
                             </div>
-                            <div><strong>Date Registered</strong>: {{ organization.registry_date }}
-                            </div>
-                            </div>
+                            <hr>
                         {% endfor %}
                     </div>
                 </div>
 
-                <div class="pagination">
+                <div class="pagination text-left">
                     {% if organization_list.has_previous %}
                         <a href="?page={{ contacts.previous_page_number }}">previous</a>
                     {% endif %}
@@ -51,15 +52,15 @@
             Page {{ organization_list.number }} of {{ organization_list.paginator.num_pages }}.
         </span>
 
+
                     {% if organization_list.has_next %}
                         <a href="?page={{ organization_list.next_page_number }}{{ current_params }}">next</a>
                     {% endif %}
+
                 </div>
             </div>
         </div>
     </div>
+    </div>
     <div class="col-md-2 side-panel"></div>
-    </div>
-    </div>
-    </div>
 {% endblock %}

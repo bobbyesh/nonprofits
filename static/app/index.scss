@@ -9,47 +9,68 @@ nav {
 
 #navbar-container {
   background-color: white;
-  // border-bottom: solid black 1px;
 }
 
 .navbar-brand,
 .navbar-nav li a {
-  height: 80px;
-  line-height: 80px;
-  padding-top: 10px;
+  margin-top: 25px;
+  padding-top: 20px;
+  line-height: 20px;
   background-color: white;
-
-}
-
-.navbar-brand {
-  padding-left: 70px;
-  font-size: 1.7em;
-  background-color: white;
-
 }
 
 nav li {
   padding-left: 20px;
   padding-right: 20px;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.3em;
+}
+
+.navbar-nav li a {
+  padding-left: 30px;
+  padding-right: 30px;
+  border: solid lightgray 1px;
+  border-radius: 10%;
+  padding-bottom: 20px;
+}
+
+.navbar-brand {
+  font-family: 'Baloo', cursive;
+  padding-left: 70px;
+  font-size: 1.9em;
+  background-color: white;
+}
+
+.divider {
+  content: "";
+  border-right: solid 1px;
+  border-color: #777777;
+  opacity: 0.5;
+  margin-left: 60px;
+  margin-top: 15px;
+  margin-bottom: -10px;
+  height: 70px;
+  display: inline-block;
 }
 
 .navbar-right {
-  padding-right: 20px;
+  padding-right: 40px;
 }
 
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:focus,
 .navbar-default .navbar-nav > .active > a:hover {
   background-color: white;
+
 }
 
 .navbar {
   border: none;
-    background-color: white;
+  background-color: white;
 
 }
 
-.navbar::after{
+.navbar::after {
   content: "";
   height: 30px;
   margin-bottom: -30px;
@@ -128,5 +149,16 @@ nav li {
 .organization-block {
   padding-top: 15px;
   padding-bottom: 15px;
-  border-top: solid black 1px;
+  //border-top: solid black 1px;
+}
+
+.pagination {
+  padding-top: 50px;
+  font-size: 24px;
+  margin-left: -20px;
+}
+
+.about-content {
+  margin: 50px 0;
+  padding: 25px 0;
 }
